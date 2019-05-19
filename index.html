@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      background-color: #676363;
+      height: 40px;
+      width: 40px;
+      margin-right: 5px;
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .white_circle {
+      padding: 10px;
+      border-radius: 100%;
+      background-color: white;
+    }
+    .black_circle {
+      padding: 10px;
+      border-radius: 100%;
+      background-color: #676363;
+    }
+  </style>
+  <body>
+    <div id="root">
+      <div class="table_wrapper" style="padding-left:50px;padding-top:50px;">
+        <div id="roottable">
+          <!-- <div
+                id="roottable"
+                class="row_wise"
+                style="display: flex;margin-top: 5px;"
+              >
+                <div
+                  class="box"
+                  style="background-color:#676363;height:40px;width:40px;margin-right: 5px;text-align: center;padding-top:10px;padding-bottom:10px;"
+                >
+                  <span
+                    style="padding:10px;border-radius:100%;background-color:white;"
+                  >
+                  </span>
+                </div>
+                <div
+                  class="box"
+                  style="background-color:#676363;height:40px;width:40px;margin-right: 5px;text-align: center;padding-top:10px;padding-bottom:10px;"
+                >
+                  <span
+                    style="padding:10px;border-radius:100%;background-color:white;"
+                  >
+                  </span>
+                </div>
+                <div
+                  class="box"
+                  style="background-color:#676363;height:40px;width:40px;margin-right: 5px;text-align: center;padding-top:10px;padding-bottom:10px;"
+                >
+                  <span
+                    style="padding:10px;border-radius:100%;background-color:white;"
+                  >
+                  </span>
+                </div>
+                <div
+                  class="box"
+                  style="background-color:#676363;height:40px;width:40px;margin-right: 5px;text-align: center;padding-top:10px;padding-bottom:10px;"
+                >
+                  <span
+                    style="padding:10px;border-radius:100%;background-color:white;"
+                  >
+                  </span>
+                </div>
+                <div
+                  class="box"
+                  style="background-color:#676363;height:40px;width:40px;margin-right: 5px;text-align: center;padding-top:10px;padding-bottom:10px;"
+                >
+                  <span
+                    style="padding:10px;border-radius:100%;background-color:white;"
+                  >
+                  </span>
+                </div>
+                <div
+                  class="box"
+                  style="background-color:#676363;height:40px;width:40px;margin-right: 5px;text-align: center;padding-top:10px;padding-bottom:10px;"
+                >
+                  <span
+                    style="padding:10px;border-radius:100%;background-color:white;"
+                  >
+                  </span>
+                </div>
+              </div>
+               -->
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const x_row = 6;
+    const y_row = 6;
+    let numberOfArray = 5;
+    let randomNumber = null;
+    var arr = [];
+    var blarr = [];
+    $(document).ready(function() {
+      startGame();
+    });
+
+    function startGame() {
+      //   var d = document.getElementById("roottable");
+      //   d.parentNode.removeChild(d);
+      console.log("Increase number of Array", numberOfArray);
+      randomNumberArray = createRandomNumber();
+      createTableBox(randomNumberArray);
+    }
+
+    function createRandomNumber() {
+      console.log("create Random Number");
+      while (arr.length < numberOfArray) {
+        var r = Math.floor(Math.random() * 36) + 1;
+        if (arr.indexOf(r) === -1) arr.push(r);
+      }
+      return arr;
+    }
+
+    function createTableBox(whitebox) {
+      console.log("Create Table Box", whitebox);
+      let box = "";
+      let count = 1;
+      for (i = 0; i < x_row; i++) {
+        box +=
+          '<div id="rowline" class="row_wise" style="display: flex;margin-bottom:5px;">';
+        for (j = 0; j < y_row; j++, count++) {
+          //console.log("TEST");
+          if ($.inArray(count, whitebox) !== -1) {
+            box +=
+              '<div class="box"><span onclick="getValue(' +
+              count +
+              ')" class="white_circle"></span></div>';
+          } else {
+            box +=
+              '<div class="box"><span onclick="getValue(' +
+              count +
+              ')" class="black_circle"></span></div>';
+          }
+          //console.log(count);
+        }
+        box += "</div>";
+      }
+      document.getElementById("roottable").innerHTML = box;
+      setTimeout(function() {
+        createBlankTable();
+      }, 5000);
+    }
+
+    function createBlankTable() {
+      let box = "";
+      let count = 1;
+      for (i = 0; i < x_row; i++) {
+        box +=
+          '<div id="rowline" class="row_wise" style="display: flex;margin-bottom:5px;">';
+        for (j = 0; j < y_row; j++, count++) {
+          //console.log("TEST");
+          box +=
+            '<div class="box"><span onclick="getValue(' +
+            count +
+            ')" class="black_circle"></span></div>';
+          //console.log(count);
+        }
+        box += "</div>";
+      }
+      document.getElementById("roottable").innerHTML = box;
+    }
+
+    function getValue(count) {
+      console.log("Clickable", count);
+      console.log("Random Number Array", randomNumberArray);
+      if ($.inArray(count, randomNumberArray) !== -1) {
+        blarr.push(count);
+        console.log("True", blarr);
+        if (blarr.length === randomNumberArray.length) {
+          numberOfArray++;
+          blarr = [];
+          arr = [];
+          alert("You have done successfully");
+          setTimeout(function() {
+            startGame();
+          }, 3000);
+        }
+      } else {
+        alert("Please try again.");
+        arr = [];
+        blarr = [];
+        startGame();
+      }
+    }
+  </script>
+</html>
